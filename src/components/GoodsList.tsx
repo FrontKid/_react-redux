@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { action as goodsAction } from '../features/goods';
+import { useAppSelector } from '../app/hooks';
 
 export const GoodsList = () => {
-  const [newGood, setNewGood] = useState('');
-  const [goods, setGoods] = useState<string[]>(['Apple', 'Banana', 'Coconut']);
+  const [newGoodsEntity, setNewGoodsEntity] = useState('');
+  const goods = useAppSelector(state => state.goods)
+  const dispatch = useDispatch();
 
-  const addGood = (goodToAdd: string) => {
-    setGoods(current => [...current, goodToAdd]);
-  }
-
-  const removeGood = (goodToRemove: string) => {
-    setGoods(current => current.filter(
-      good => good !== goodToRemove,
-    ));
-  };
+  const addGood = (goodsEntity: string) => dispatch(goodsAction.add(goodsEntity))
+  const removeGood = (goodsEntity: string) => dispatch(goodsAction.take(goodsEntity))
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!newGood) {
+    if (!newGoodsEntity) {
       return;
     }
 
-    addGood(newGood);
-    setNewGood('');
+    addGood(newGoodsEntity);
+    setNewGoodsEntity('');
   };
 
   return (
@@ -32,8 +29,8 @@ export const GoodsList = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={newGood}
-          onChange={e => setNewGood(e.target.value)}
+          value={newGoodsEntity}
+          onChange={e => setNewGoodsEntity(e.target.value)}
         />
         <button>Add</button>
       </form>
