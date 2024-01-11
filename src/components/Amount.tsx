@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { action as amountAction } from '../features/amount';
+import { actions as amountAction } from '../features/amount';
 import { useAppSelector } from '../app/hooks';
 
 export const Amount = () => {

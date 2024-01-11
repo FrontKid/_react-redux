@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { action as goodsAction } from '../features/goods';
+import { actions as goodsAction } from '../features/goods';
 import { useAppSelector } from '../app/hooks';
 
 export const GoodsList = () => {

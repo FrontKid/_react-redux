@@ -1,37 +1,21 @@
-const ADD = 'goods/ADD';
-const TAKE = 'goods/TAKE';
-const CLEAR = 'goods/CLEAR';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type TAddAction = { type: typeof ADD; payload: string };
-type TTakeAction = { type: typeof TAKE; payload: string };
-type TClearAction = { type: typeof CLEAR }
+const initialState: string[] = [];
 
-const add = (goodsEntity: string): TAddAction => ({ type: ADD, payload: goodsEntity });
-const take = (goodsEntity: string): TTakeAction => ({ type: TAKE, payload: goodsEntity });
-const clear = (): TClearAction => ({ type: CLEAR });
-
-type TAction = TAddAction | TTakeAction | TClearAction
-
-const goodsReducer = (goods: string[] = [], action: TAction) => {
-  switch(action.type) {
-    case 'goods/ADD': {
-      return [...goods, action.payload];
-    }
-
-    case 'goods/TAKE': {
-      return goods.filter(goodsEntity => goodsEntity !== action.payload);
-    }
-
-    case 'goods/CLEAR': {
-      return [];
-    }
-
-    default: {
-      return goods;
-    }
+const goodsSlice = createSlice({
+  name: 'goods',
+  initialState,
+  reducers: {
+    add: (goods, action: PayloadAction<string>) => {
+      goods.push(action.payload)
+    },
+    take: (goods, action: PayloadAction<string>) => {
+      return goods.filter(goodsEntity => goodsEntity !== action.payload)
+    },
+    clear: () => [],
   }
-};
+})
 
-export const action = {add, take, clear};
+export const { actions } = goodsSlice;
 
-export default goodsReducer;
+export default goodsSlice.reducer;
